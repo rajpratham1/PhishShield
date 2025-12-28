@@ -1,6 +1,11 @@
-[build]
+ [build]
   command = "pip install -r requirements.txt && python app.py"
   publish = "templates"
+  command = "pip install -r requirements.txt"
+  publish = "static"
+ 
+[functions]
+  directory = "api"
 
-[build.environment]
-  PYTHON_VERSION = "3.11"
+ [build.environment]
+   PYTHON_VERSION = "3.11"
