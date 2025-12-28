@@ -1,0 +1,4 @@
+# Add known malicious domains or URLs here, one per line.
+# Example:
+# evil.com
+# phishing.example.com/login

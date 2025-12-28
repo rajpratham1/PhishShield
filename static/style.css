@@ -1,0 +1,97 @@
+body {
+    background-color: #f5f5f5; /* Light Gray */
+    color: #5D4037; /* Dark Brown */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.5s ease;
+}
+
+.card {
+    background-color: #ffffff; /* White */
+    border: 1px solid #e0e0e0; /* Lighter Gray */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.card-title {
+    color: #3E2723; /* Darker Brown */
+}
+
+.card-subtitle {
+    color: #795548; /* Brown */
+}
+
+.form-control {
+    background-color: #fafafa;
+    color: #5D4037;
+    border: 1px solid #e0e0e0;
+}
+
+.form-control:focus {
+    background-color: #fafafa;
+    color: #5D4037;
+    border-color: #795548; /* Brown */
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: #795548; /* Brown */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #5D4037; /* Darker Brown */
+}
+
+.alert-warning {
+    background-color: #ffe0b2; /* Light Orange */
+    color: #5D4037;
+    border: 1px solid #ffcc80;
+}
+
+.alert-success {
+    background-color: #c8e6c9; /* Light Green */
+    color: #3E2723;
+    border: 1px solid #a5d6a7;
+}
+
+.badge.bg-info {
+    background-color: #795548 !important; /* Brown */
+}
+
+.list-group-item {
+    background-color: transparent;
+    border-color: #e0e0e0;
+    color: #5D4037;
+}
+
+.badge.bg-secondary {
+    background-color: #90a4ae !important; /* Blue Grey */
+    color: #ffffff;
+}
+
+.badge.bg-danger {
+    background-color: #e57373 !important; /* Light Red */
+}
+
+.badge.bg-warning {
+    background-color: #ffd54f !important; /* Light Yellow */
+    color: #5D4037;
+}
+
+.badge.bg-success {
+    background-color: #81c784 !important; /* Light Green */
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

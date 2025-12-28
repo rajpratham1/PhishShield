@@ -1,0 +1,11 @@
+[build]
+  command = "pip install -r requirements.txt"
+  publish = "static"
+
+[functions]
+  included_files = ["model.pkl", "phishing_features.py", "templates/*", "blacklist.txt"]
+
+[[redirects]]
+  from = "/*"
+  to = "/api/app"
+  status = 200
