@@ -84,17 +84,3 @@ def api_check():
             'url': url,
             'error': f"An error occurred: {str(e)}"
         }), 500
-
-# The following block is not needed for Netlify deployment and can be removed.
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
-# Expose the Flask app for the WSGI server
-# This is what Netlify's Python runtime will use
-def handler(event, context):
-    from werkzeug.serving import run_simple
-    from werkzeug.wrappers import Request, Response
-    
-    # This is a simple WSGI wrapper.
-    # A more robust solution might use a library like 'serverless-wsgi'
-    return Response.from_app(app, event)
