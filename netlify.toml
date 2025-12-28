@@ -1,11 +1,6 @@
 [build]
-  command = "pip install -r requirements.txt"
-  publish = "static"
+  command = "pip install -r requirements.txt && python app.py"
+  publish = "templates"
 
-[functions]
-  included_files = ["model.pkl", "phishing_features.py", "templates/*", "blacklist.txt"]
-
-[[redirects]]
-  from = "/*"
-  to = "/api/app"
-  status = 200
+[build.environment]
+  PYTHON_VERSION = "3.11"
