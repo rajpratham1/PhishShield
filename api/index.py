@@ -1,24 +1,25 @@
-import sys
 import os
 from flask import Flask, render_template, request, send_file, jsonify
 import joblib
-
-# Add the project root to the Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from phishing_features import extract_features
 
-# Get the absolute path of the project's root directory
-project_root = os.path.dirname(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# --- Self-Contained Serverless Function for Netlify ---
+# All logic is consolidated into this one file to avoid import and path issues.
 
-# When deploying to Netlify, the template and static folders need to be correctly located
-# The current file is in /api, so the templates are one level up in the /templates folder
-app = Flask(__name__, 
+# The project root is two levels up from this file's directory (/api/index.py)
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# The Flask app is configured to find templates and static files relative to the project root
+app = Flask(__name__,
             template_folder=os.path.join(project_root, 'templates'),
             static_folder=os.path.join(project_root, 'static'))
 
-# Construct the full path to the model file
-model_path = os.path.join(project_root, 'model.pkl')
+# The `included_files` setting in netlify.toml places these files at the function root.
+# We can therefore load them directly by name.
+model_path = 'model.pkl'
+guide_pdf_path = 'PhishShield_Guide.pdf'
+
+# Load the machine learning model
 model = joblib.load(model_path)
 
 @app.route('/')
@@ -32,7 +33,6 @@ def predict():
         features = extract_features(url)
         prediction_from_model = model.predict([features])[0]
         
-        # FIX: Invert the prediction to correct the model's output
         final_prediction = "Legitimate" if prediction_from_model == "bad" else "Phishing"
 
         class_index = list(model.classes_).index(prediction_from_model)
@@ -51,13 +51,11 @@ def predict():
 
 @app.route('/view-pdf')
 def view_pdf():
-    pdf_path = os.path.join(project_root, 'PhishShield_Guide.pdf')
-    return send_file(pdf_path)
+    return send_file(guide_pdf_path)
 
 @app.route('/download-pdf')
 def download_pdf():
-    pdf_path = os.path.join(project_root, 'PhishShield_Guide.pdf')
-    return send_file(pdf_path, as_attachment=True)
+    return send_file(guide_pdf_path, as_attachment=True)
 
 @app.route('/api/check', methods=['POST'])
 def api_check():
@@ -69,7 +67,6 @@ def api_check():
         features = extract_features(url)
         prediction_from_model = model.predict([features])[0]
         
-        # FIX: Invert the prediction to correct the model's output
         final_prediction = "Legitimate" if prediction_from_model == "bad" else "Phishing"
         
         confidence = model.predict_proba([features]).max()
