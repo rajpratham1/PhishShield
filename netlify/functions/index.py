@@ -80,8 +80,4 @@ def api_check():
         return jsonify({
             'url': url,
             'error': f"An error occurred: {str(e)}"
-<<<<<<< HEAD:netlify/functions/index.py
         }), 500
-=======
-        }), 500
->>>>>>> d1575ba1772379724a7ff472844ce9829614f769:api/index.py
