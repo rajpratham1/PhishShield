@@ -1,9 +1,22 @@
+import os
 from flask import Flask, render_template, request, send_file, jsonify
 import joblib
 from phishing_features import extract_features
 
-app = Flask(__name__)
-model = joblib.load("model.pkl")
+# Get the absolute path of the project's root directory
+project_root = os.path.dirname(os.path.abspath(__file__))
+
+# Configure the Flask app with absolute paths for templates and static files
+app = Flask(__name__,
+            template_folder=os.path.join(project_root, 'templates'),
+            static_folder=os.path.join(project_root, 'static'))
+
+# Construct absolute paths for file-based assets
+model_path = os.path.join(project_root, 'model.pkl')
+guide_pdf_path = os.path.join(project_root, 'PhishShield_Guide.pdf')
+
+# Load the machine learning model
+model = joblib.load(model_path)
 
 @app.route('/')
 def home():
@@ -35,11 +48,11 @@ def predict():
 
 @app.route('/view-pdf')
 def view_pdf():
-    return send_file('PhishShield_Guide.pdf')
+    return send_file(guide_pdf_path)
 
 @app.route('/download-pdf')
 def download_pdf():
-    return send_file('PhishShield_Guide.pdf', as_attachment=True)
+    return send_file(guide_pdf_path, as_attachment=True)
 
 @app.route('/api/check', methods=['POST'])
 def api_check():
